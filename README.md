@@ -10,6 +10,12 @@ payment; tap a payment to edit or delete it. Rent starts at **$220**, due on day
 
 Use JDK 17 or 21. Gradle is included through the standard wrapper.
 
+For Xcode, install a JDK registered with macOS (check with
+`/usr/libexec/java_home -V`). The build phase selects JDK 17, or JDK 21 if 17 is
+unavailable, instead of using an unsupported system default such as Java 25.
+If neither is installed, install [Temurin 17](https://adoptium.net/temurin/releases/?version=17)
+and restart the build. Gradle failures also include their stack traces.
+
 - **Android:** open the project in Android Studio, install Android SDK 36, and run
   `composeApp` on an emulator or device with Android 7.0+.
 - **iOS:** on a Mac with Xcode 16+, open `iosApp/iosApp.xcodeproj`, choose the

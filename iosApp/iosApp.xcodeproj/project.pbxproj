@@ -31,7 +31,7 @@
             outputPaths = ();
             runOnlyForDeploymentPostprocessing = 0;
             shellPath = /bin/sh;
-            shellScript = "set -eu\ncd \"$SRCROOT/..\"\n./gradlew :composeApp:embedAndSignAppleFrameworkForXcode\n";
+            shellScript = "set -eu\nif budget_java_home=$(/usr/libexec/java_home -F -v 17 2>/dev/null) || budget_java_home=$(/usr/libexec/java_home -F -v 21 2>/dev/null); then\n    export JAVA_HOME=\"$budget_java_home\"\nelse\n    echo \"error: Install JDK 17 or 21, then rebuild. This project cannot run Gradle with Java 25.\" >&2\n    exit 1\nfi\n\"$JAVA_HOME/bin/java\" -version\ncd \"$SRCROOT/..\"\n./gradlew :composeApp:embedAndSignAppleFrameworkForXcode --stacktrace\n";
         };
         A00000000000000000000009 = { isa = PBXSourcesBuildPhase; buildActionMask = 2147483647; files = (A00000000000000000000001); runOnlyForDeploymentPostprocessing = 0; };
         A0000000000000000000000A = { isa = PBXFrameworksBuildPhase; buildActionMask = 2147483647; files = (); runOnlyForDeploymentPostprocessing = 0; };
