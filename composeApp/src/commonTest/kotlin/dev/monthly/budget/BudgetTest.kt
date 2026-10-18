@@ -24,11 +24,10 @@ class BudgetTest {
     }
 
     @Test
-    fun firstLaunchIncludesTheTwoBills() = runTest {
-        val bills = BudgetStore(MemoryStorage()).load()
-        assertEquals(22600L, bills.sumOf { it.cents })
-        assertEquals(Payment(1, "Rent", 22000, 25), bills[0])
-        assertEquals(Payment(2, "Cellcard SIM", 600), bills[1])
+    fun firstLaunchIsEmptyWithoutWritingAnyData() = runTest {
+        val storage = MemoryStorage()
+        assertEquals(emptyList(), BudgetStore(storage).load())
+        assertNull(storage.value)
     }
 
     @Test
@@ -40,7 +39,7 @@ class BudgetTest {
     }
 
     @Test
-    fun deletingEveryBillDoesNotRestoreTheDefaults() = runTest {
+    fun deletingEveryBillKeepsTheBudgetEmptyAfterReload() = runTest {
         val storage = MemoryStorage()
         BudgetStore(storage).save(emptyList())
         assertEquals(emptyList(), BudgetStore(storage).load())
@@ -73,7 +72,7 @@ class BudgetTest {
     }
 
     @Test
-    fun damagedDataIsNotSilentlyReplacedWithSampleBills() = runTest {
+    fun damagedDataIsNotSilentlyReset() = runTest {
         val storage = MemoryStorage("not json")
         assertFailsWith<Exception> { BudgetStore(storage).load() }
         assertEquals("not json", storage.value)

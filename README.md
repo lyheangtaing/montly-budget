@@ -2,9 +2,9 @@
 
 A small, offline budget app for Android and iOS using Kotlin Compose Multiplatform.
 
-One screen shows your recurring payments and a spending chart. Tap **+** to add a
-payment; tap a payment to edit or delete it. Rent starts at **$220**, due on day
-**25**, and Cellcard SIM at **$6**, for a monthly total of **$226**.
+One screen shows your recurring payments and a spending chart. Every new budget
+starts empty. Tap **+** to add your own payment; tap a payment to edit or delete it.
+Your payments are saved on your device and restored when you reopen the app.
 
 ## Run
 
@@ -38,16 +38,18 @@ domain/storage tests and uploads a debug APK.
 - JSON records live in app-private SharedPreferences on Android and UserDefaults
   on iOS. No account, server, internet permission, analytics, or cross-device sync.
 - Saving happens off the main thread. A failed save keeps the editor open, and
-  unreadable saved data is retained rather than replaced with starter payments.
+  unreadable saved data is retained.
 - Due days describe the recurring day of the month; they do not schedule reminders
   or calculate overdue payments. Everything is in USD.
 
-The app seeds the two starter payments only when no saved budget exists. Deleting
-all payments leaves an empty budget. Uninstalling the app removes its local data.
+The app never inserts sample payments. Existing saved payments are preserved;
+delete unwanted items in the editor. Deleting all payments leaves an empty
+budget. Uninstalling the app removes its local data.
 
 ## Preview and verification
 
-The image in [docs/preview.png](docs/preview.png) is a **design mockup**, not a
-screenshot of a running app. The shared UI implements that simple layout with
-payment entry added. Native compilation still needs to be checked by the build
-workflow or a machine with the platform SDKs; no native build is claimed here.
+The image in [docs/preview.png](docs/preview.png) is an older **design mockup** with
+illustrative payments, not a screenshot of a running app. The current app starts
+empty and displays only payments entered by the user. Native compilation still
+needs to be checked by the build workflow or a machine with the platform SDKs;
+no native build is claimed here.

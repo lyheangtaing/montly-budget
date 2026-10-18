@@ -31,10 +31,7 @@ internal class BudgetStore(private val storage: BudgetStorage) {
     private val json = Json { ignoreUnknownKeys = true; encodeDefaults = true }
 
     suspend fun load(): List<Payment> {
-        val raw = storage.read() ?: return listOf(
-            Payment(1, "Rent", 22000, 25),
-            Payment(2, "Cellcard SIM", 600),
-        )
+        val raw = storage.read() ?: return emptyList()
         val saved = json.decodeFromString<SavedBudget>(raw)
         require(saved.version == 1) { "Unsupported budget version" }
         return saved.payments.also(::validate)
